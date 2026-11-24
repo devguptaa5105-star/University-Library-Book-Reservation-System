@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShelfWise – Campus Library</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <span class="logo">Shelf<b>Wise</b></span>
+  <div>
+    <a href="#side" id="bell">Messages 0</a>
+    <button id="cancelBtn">Cancel booking</button>
+    <button id="staff">Staff</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1>Find it. Hold it.<br><em>Never miss a book.</em></h1>
+  <p>Pick your course, see how many copies are left and reserve for up to 48 hours.</p>
+  <div class="stats" id="stats"></div>
+  <div class="steps">
+    <div><b>1</b>Search by title, author, subject or ISBN</div>
+    <div><b>2</b>Reserve with your mobile number</div>
+    <div><b>3</b>See your hold code and messages here</div>
+  </div>
+</header>
+<div class="search"><input id="q" type="search" placeholder="Search title, author, subject or ISBN" aria-label="Search catalog"></div>
+
+<div class="wrap">
+  <div id="chips" class="chips" role="radiogroup" aria-label="Course"></div>
+  <div id="brs" class="chips br" role="radiogroup" aria-label="Branch"></div>
+  <div id="subs" class="chips br sb" role="radiogroup" aria-label="Subject"></div>
+  <div class="cols">
+    <section><p id="count" aria-live="polite"></p><div id="list"></div></section>
+    <aside id="side"></aside>
+  </div>
+</div>
+
+<!-- Reserve / notify form -->
+<dialog id="dlg">
+  <form id="form">
+    <h2 id="ft"></h2>
+    <label>Full name<input name="name" required autocomplete="name"></label>
+    <label>Registration number<input name="reg" required pattern="\d{8}" inputmode="numeric" title="8-digit registration number"></label>
+    <label>Mobile number<input name="phone" type="tel" required pattern="[6-9]\d{9}" maxlength="10" inputmode="numeric" autocomplete="tel" title="10-digit mobile number"></label>
+    <label>Course<select name="prog" id="pg" required></select></label>
+    <label id="hl">Hold time
+      <select name="hours">
+        <option value="1">1 hour</option><option value="3">3 hours</option><option value="6">6 hours</option>
+        <option value="12">12 hours</option><option value="24">24 hours</option><option value="48" selected>48 hours (maximum)</option>
+      </select>
+    </label>
+    <p id="wn" hidden>When a copy is free, it is held for you for 48 hours and you get a message.</p>
+    <div class="row"><button type="button" class="btn alt" onclick="dlg.close()">Cancel</button><button class="btn">Confirm</button></div>
+  </form>
+  <div id="ticket" hidden>
+    <h2>Hold confirmed</h2><p id="tm"></p><div id="code"></div>
+    <p>Keep this code. You need it to cancel the booking.</p><br>
+    <button class="btn" style="width:100%" onclick="dlg.close()">Done</button>
+  </div>
+</dialog>
+
+<!-- Cancel a booking with code -->
+<dialog id="cd">
+  <form id="cform">
+    <h2>Cancel a booking</h2>
+    <p>Enter the code you received when you reserved.</p>
+    <label>Hold code<input name="code" required maxlength="6" autocomplete="off"></label>
+    <label>Registration number<input name="reg" required pattern="\d{8}" inputmode="numeric"></label>
+    <p id="ce" class="err" hidden></p>
+    <div class="row"><button type="button" class="btn alt" onclick="cd.close()">Back</button><button class="btn">Find booking</button></div>
+  </form>
+</dialog>
+
+<!-- Are you sure? -->
+<dialog id="cf">
+  <h2>Are you sure?</h2>
+  <p id="cm"></p>
+  <div class="row"><button class="btn alt" onclick="cf.close()">No, keep it</button><button class="btn red" id="yes">Yes, cancel</button></div>
+</dialog>
+
+<!-- Staff login + panel -->
+<dialog id="am"><div id="ab"></div></dialog>
+
+<footer class="foot">ShelfWise Campus Library · Holds last up to 48 hours</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="script.js"></script>
+</body>
+</html>
